@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-"""
-Comprehensive test runner for Credit Approval System
-"""
+
 import os
 import sys
 import django
