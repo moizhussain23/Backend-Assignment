@@ -60,7 +60,7 @@ Credit scores (0-100) are calculated based on:
 
 ## Admin Panel
 
-Access the Django admin panel at 
+Access the Django admin panel at:
 ```bash
 http://localhost:8000/admin/
 ```
