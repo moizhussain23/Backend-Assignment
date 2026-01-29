@@ -17,11 +17,12 @@ A Django-based backend system for credit approval using historical loan data and
 
 1. Clone the repository
 2. Make sure Docker and Docker Compose are installed
-3. Run the application
+3. Make sure you are into root directory to run teh command.
+4. Run the application
 
 ### Build using Docker
 ```bash
-docker-compose build
+docker-compose build --no-cache
 ```
 
 ### Compose up using Docker
@@ -59,7 +60,10 @@ Credit scores (0-100) are calculated based on:
 
 ## Admin Panel
 
-Access the Django admin panel at `http://localhost:8000/admin/`
+Access the Django admin panel at 
+```bash
+http://localhost:8000/admin/
+```
 - Username: admin
 - Password: admin123
 
