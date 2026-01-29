@@ -1,0 +1,9 @@
+Django>=4.0
+djangorestframework
+psycopg2-binary
+celery
+redis
+openpyxl
+python-decouple
+django-cors-headers
+python-dateutil
