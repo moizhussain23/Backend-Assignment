@@ -59,6 +59,15 @@ def ingest_customer_data():
                         customer.save()
                         customers_updated += 1
         
+        # Reset the customer ID sequence to prevent duplicate key errors on future registrations
+        from django.db import connection
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT setval('customers_customer_id_seq', 
+                             (SELECT COALESCE(MAX(customer_id), 0) + 1 FROM customers));
+            """)
+            logger.info("Customer ID sequence reset to prevent duplicate key errors")
+        
         logger.info(f"Customer data ingestion completed: {customers_created} created, {customers_updated} updated")
         return f"Successfully processed customer data: {customers_created} created, {customers_updated} updated"
         
@@ -135,6 +144,16 @@ def ingest_loan_data():
                     except Customer.DoesNotExist:
                         logger.warning(f"Customer with ID {customer_id} not found for loan {loan_id}")
                         continue
+        
+        # Reset the loan ID sequence to prevent duplicate key errors on future loan creation
+        from django.db import connection
+        with connection.cursor() as cursor:
+            # Get the correct sequence name for loans table
+            cursor.execute("""
+                SELECT setval(pg_get_serial_sequence('loans', 'loan_id'), 
+                             (SELECT COALESCE(MAX(loan_id), 0) + 1 FROM loans));
+            """)
+            logger.info("Loan ID sequence reset to prevent duplicate key errors")
         
         logger.info(f"Loan data ingestion completed: {loans_created} created, {loans_updated} updated")
         return f"Successfully processed loan data: {loans_created} created, {loans_updated} updated"
